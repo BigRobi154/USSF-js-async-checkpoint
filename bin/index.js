@@ -51,7 +51,7 @@ const pokeTypeSearch = function (textFile) {
                             }
                             else { console.log(`${pokeCapName}: ${pokemon.types[0].type.name}`) }
                         } else {
-                            console.log('Pokemon doensn\'t exist on this line');
+                            console.log('The pokemon on this line doensn\'t exist');
                         }
                     }
                 });
