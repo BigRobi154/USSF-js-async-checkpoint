@@ -5,12 +5,10 @@ C - use pokeAPI
 E - no exceptions at this time*/
 import fs from "fs";
 import fetch from "node-fetch";
-import { resolve } from "path";
 
 const pokemonFileName = process.argv[2];
 
 const pokeTypeSearch = function (textFile) {
-
     //read file
     if (typeof textFile === 'string') {
         const pokemon = new Promise((resolve, reject) => {
@@ -46,16 +44,35 @@ const pokeTypeSearch = function (textFile) {
 
                             const pokeCapName = rest.join(cap);
 
+                            let fileToWrite = '';
+
                             if (pokemon.types[1]) {
-                                console.log(`${pokeCapName}: ${pokemon.types[0].type.name}, ${pokemon.types[1].type.name} `)
+                                fileToWrite += `${pokeCapName}: ${pokemon.types[0].type.name}, ${pokemon.types[1].type.name}\n`;
+                            } else {
+                                fileToWrite += `${pokeCapName}: ${pokemon.types[0].type.name}\n`
                             }
-                            else { console.log(`${pokeCapName}: ${pokemon.types[0].type.name}`) }
+                            console.log(fileToWrite)
+
+                            fs.appendFile('./pokemonAttributes', fileToWrite, (err) => {
+                                if (err) {
+                                    const errorMsg = new Error('Something went wrong')
+                                    console.log(errorMsg);
+                                } else {
+                                    console.log('Successfully written file');
+                                }
+                            } )
                         } else {
                             console.log('The pokemon on this line doensn\'t exist');
                         }
                     }
                 });
         })
+    } else {
+        const errorMsg = new Error(`You need to create a file or use a the given test.txt file and type:
+         node . <fileName>
+          in order to run this function
+          `)
+        console.log(errorMsg);
     }
 }
 
