@@ -5,12 +5,10 @@ C - use pokeAPI
 E - no exceptions at this time*/
 import fs from "fs";
 import fetch from "node-fetch";
-import { resolve } from "path";
 
 const pokemonFileName = process.argv[2];
 
 const pokeTypeSearch = function (textFile) {
-
     //read file
     if (typeof textFile === 'string') {
         const pokemon = new Promise((resolve, reject) => {
@@ -56,6 +54,12 @@ const pokeTypeSearch = function (textFile) {
                     }
                 });
         })
+    } else {
+        const errorMsg = new Error(`You need to create a file or use a the given test.txt file and type:
+         node . <fileName>
+          in order to run this function
+          `)
+        console.log(errorMsg);
     }
 }
 
